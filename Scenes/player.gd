@@ -11,7 +11,6 @@ extends CharacterBody2D
 @export var spring: SpringData
 
 func _process(delta: float):
-	input_handling(delta)
 	update_visuals(delta)
 
 func _physics_process(_delta: float):
@@ -19,19 +18,30 @@ func _physics_process(_delta: float):
 	spring.AddVelocity(-velocity.x * _delta * movement_lean_factor)
 	simulate_spring_motion(_delta)
 
-func input_handling(_delta: float):
-	if Input.is_action_just_pressed("poke"):
-		print("poke")
-		spring.AddVelocity(pokeForce)
+func _input(event: InputEvent) -> void:
+	velocity = Vector2.RIGHT * Input.get_axis("move_left", "move_right") * speed
 
-	velocity = Vector2(Input.get_axis("move_left", "move_right") * speed, 0);
+	if event is InputEventScreenTouch:
+		if event.is_pressed(): 
+			velocity = Vector2.RIGHT * (event.position < get_viewport().get_visible_rect().size * 0.5) * speed
+		elif event.double_tap:
+			spring.AddVelocity(pokeForce)
+
+	elif event is InputEventMouseButton:
+		if event.button_index == MOUSE_BUTTON_LEFT and event.is_pressed(): 
+			velocity = Vector2.LEFT * speed
+		elif event.button_index == MOUSE_BUTTON_RIGHT and event.is_pressed():
+			velocity = Vector2.RIGHT * speed
+
+	if Input.is_action_just_pressed("poke"):
+		spring.AddVelocity(pokeForce)
 
 func update_visuals(_delta):
 	var children = get_all_children($BodyBase)
 
 	var rotFactor = spring.GetPosition() / children.size();
 
-	global_rotation = rotFactor
+	#global_rotation = rotFactor
 
 	for c in children:
 		c.rotation = rotFactor

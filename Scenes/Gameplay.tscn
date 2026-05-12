@@ -5,4 +5,5 @@
 [node name="Gameplay" type="Node2D" unique_id=399864752]
 
 [node name="Player" parent="." unique_id=2099615964 instance=ExtResource("1_yijg0")]
-position = Vector2(578, 580)
+position = Vector2(578, 632)
+scale = Vector2(0.25, 0.25)
