@@ -1,49 +1,52 @@
 extends CharacterBody2D
 
 @export var speed = 500
-@export var springFrequency = 10
-@export var springDampingRatio = 1.0
+
+@export var movement_lean_factor = 0.0
 
 @export var pokeForce: float = 15
 
-var cPosition = 0
-var cVelocity = 0
-var cEquilibrium = 0
+@export var use_fast_spring_motion: bool = false
 
-var movement_velocity = Vector3.ZERO
+@export var spring: SpringData
 
-func _ready() -> void:
-	pass
+func _process(delta: float):
+	input_handling(delta)
+	update_visuals(delta)
 
-func _process(delta: float) -> void:
-	_input_handling(delta)
-	_simulate_spring_motion(delta)
-	_process_body_visuals()
+func _physics_process(_delta: float):
+	move_and_slide()
+	spring.AddVelocity(-velocity.x * _delta * movement_lean_factor)
+	simulate_spring_motion(_delta)
 
-func _process_body_visuals() -> void:
-	#var children = _get_all_children($BodyBase)
-	print("Process Body - Pos: ", cPosition, ". Vel: ", cVelocity)
-	rotation = cPosition
+func input_handling(_delta: float):
+	if Input.is_action_just_pressed("poke"):
+		print("poke")
+		spring.AddVelocity(pokeForce)
 
-func _get_all_children(node:Node) -> Array:
+	velocity = Vector2(Input.get_axis("move_left", "move_right") * speed, 0);
+
+func update_visuals(_delta):
+	var children = get_all_children($BodyBase)
+
+	var rotFactor = spring.GetPosition() / children.size();
+
+	global_rotation = rotFactor
+
+	for c in children:
+		c.rotation = rotFactor
+
+func simulate_spring_motion(delta: float):
+	if use_fast_spring_motion:
+		SpringMotion.calc_damped_simple_harmonic_motion_fast(spring, delta)
+	else:
+		SpringMotion.calc_damped_simple_harmonic_motion(spring, delta)
+
+func get_all_children(node:Node) -> Array:
 	var all_children := []
 	for child in node.get_children():
 		all_children.append(child)
-		for grand_child in _get_all_children(child):
+		for grand_child in get_all_children(child):
 			all_children.append(grand_child)
 
 	return all_children
-
-func _input_handling(delta: float) -> void:
-	if Input.is_action_just_pressed("poke"):
-		cVelocity += pokeForce
-
-	movement_velocity = Vector2(Input.get_axis("move_left", "move_right") * speed, 0);
-	velocity = movement_velocity;
-	move_and_slide()
-	#cVelocity += movement_velocity.x * movementLeanFactor;
-
-func _simulate_spring_motion(delta: float) -> void:
-	print("Simulate spring - Pos: ", cPosition, ". Vel: ", cVelocity)
-	spring_motion.CalcDampedSimpleHarmonicMotionFast(cPosition, cVelocity, cEquilibrium, delta, springFrequency, springDampingRatio)
-	

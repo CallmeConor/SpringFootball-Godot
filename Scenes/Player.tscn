@@ -2,12 +2,19 @@
 
 [ext_resource type="Script" uid="uid://bbk1w1m4qil8f" path="res://Scenes/player.gd" id="1_kyqiw"]
 [ext_resource type="Texture2D" uid="uid://cdsdt3djtg60h" path="res://icon.svg" id="1_rpqav"]
+[ext_resource type="Script" uid="uid://bk8sty7ivyytm" path="res://Springs/spring_data.gd" id="2_gntrk"]
+
+[sub_resource type="Resource" id="Resource_dewec"]
+script = ExtResource("2_gntrk")
+metadata/_custom_type_script = "uid://bk8sty7ivyytm"
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gntrk"]
 size = Vector2(128, 128)
 
 [node name="Player" type="CharacterBody2D" unique_id=1816067859]
 script = ExtResource("1_kyqiw")
+movement_lean_factor = 0.075
+spring = SubResource("Resource_dewec")
 
 [node name="BodyBase" type="Sprite2D" parent="." unique_id=1649853472]
 texture = ExtResource("1_rpqav")
