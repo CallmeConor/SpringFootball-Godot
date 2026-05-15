@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://bvw85eugjxuf4"]
+
+[ext_resource type="Script" uid="uid://dn6wnsjy2pbav" path="res://scenes/test_collision_object.gd" id="1_ivt0y"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gbtw2"]
+
+[node name="TestCollisionObject" type="StaticBody2D" unique_id=451035326]
+collision_layer = 16
+collision_mask = 9
+script = ExtResource("1_ivt0y")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1152920285]
+shape = SubResource("RectangleShape2D_gbtw2")

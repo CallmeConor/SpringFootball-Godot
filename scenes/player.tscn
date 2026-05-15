@@ -1,20 +1,26 @@
 [gd_scene format=3 uid="uid://b3ilxo80605v5"]
 
-[ext_resource type="Script" uid="uid://bbk1w1m4qil8f" path="res://Scenes/player.gd" id="1_kyqiw"]
+[ext_resource type="Script" uid="uid://bbk1w1m4qil8f" path="res://scenes/player.gd" id="1_kyqiw"]
 [ext_resource type="Texture2D" uid="uid://cdsdt3djtg60h" path="res://icon.svg" id="1_rpqav"]
-[ext_resource type="Script" uid="uid://bk8sty7ivyytm" path="res://Springs/spring_data.gd" id="2_gntrk"]
+[ext_resource type="Script" uid="uid://bk8sty7ivyytm" path="res://springs/spring_data.gd" id="2_gntrk"]
 
 [sub_resource type="Resource" id="Resource_dewec"]
 script = ExtResource("2_gntrk")
 metadata/_custom_type_script = "uid://bk8sty7ivyytm"
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_6t5aa"]
+radius = 128.0039
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gntrk"]
 size = Vector2(128, 128)
 
 [node name="Player" type="CharacterBody2D" unique_id=1816067859]
+collision_mask = 17
 script = ExtResource("1_kyqiw")
-movement_lean_factor = 0.075
 spring = SubResource("Resource_dewec")
+max_charge_hold_time = 0.7
+max_lean_applied_on_charge = 45.0
+ball_fling_multiplier = 1.5
 
 [node name="BodyBase" type="Sprite2D" parent="." unique_id=1649853472]
 texture = ExtResource("1_rpqav")
@@ -32,8 +38,23 @@ position = Vector2(0, -128)
 texture = ExtResource("1_rpqav")
 
 [node name="BodyHead" type="Sprite2D" parent="BodyBase/BodyNode_1/BodyNode_2/BodyNode_3" unique_id=689154602]
-position = Vector2(0, -128)
+position = Vector2(0, -200)
+scale = Vector2(2.0625, 2.0625)
 texture = ExtResource("1_rpqav")
+
+[node name="Area2D" type="Area2D" parent="BodyBase/BodyNode_1/BodyNode_2/BodyNode_3/BodyHead" unique_id=918203954]
+collision_layer = 2
+collision_mask = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BodyBase/BodyNode_1/BodyNode_2/BodyNode_3/BodyHead/Area2D" unique_id=1624081593]
+shape = SubResource("CircleShape2D_6t5aa")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1002053873]
 shape = SubResource("RectangleShape2D_gntrk")
+
+[node name="BulletHeaderTimer" type="Timer" parent="." unique_id=2019112681]
+one_shot = true
+ignore_time_scale = true
+
+[connection signal="body_entered" from="BodyBase/BodyNode_1/BodyNode_2/BodyNode_3/BodyHead/Area2D" to="." method="_on_head_entered"]
+[connection signal="timeout" from="BulletHeaderTimer" to="." method="_on_bullet_header_timeout"]

@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://crpxdsbsuu1d2"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_4mhyq"]
+friction = 0.0
+bounce = 0.6
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wy63i"]
+
+[node name="BouncyWall" type="StaticBody2D" unique_id=497686968]
+collision_layer = 64
+collision_mask = 8
+physics_material_override = SubResource("PhysicsMaterial_4mhyq")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=114379382]
+shape = SubResource("RectangleShape2D_wy63i")
