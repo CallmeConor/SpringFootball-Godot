@@ -17,6 +17,8 @@ size = Vector2(128, 128)
 [node name="Player" type="CharacterBody2D" unique_id=1816067859]
 collision_mask = 17
 script = ExtResource("1_kyqiw")
+movement_lean_angle = 15.0
+max_fling_force = 1000.0
 spring = SubResource("Resource_dewec")
 max_charge_hold_time = 0.7
 max_lean_applied_on_charge = 45.0

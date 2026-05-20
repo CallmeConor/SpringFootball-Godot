@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://dtl64s0d4rrsd"]
 
 [ext_resource type="Script" uid="uid://dpcs8nb0nslgo" path="res://scenes/gameplay.gd" id="1_kwrm5"]
+[ext_resource type="Texture2D" uid="uid://b12s4tabxjqcn" path="res://concept.png" id="2_din8e"]
 [ext_resource type="PackedScene" uid="uid://b3ilxo80605v5" path="res://scenes/player.tscn" id="2_r8bcl"]
 [ext_resource type="PackedScene" uid="uid://crpxdsbsuu1d2" path="res://scenes/bouncy_wall.tscn" id="5_4bh5q"]
 [ext_resource type="PackedScene" uid="uid://bvw85eugjxuf4" path="res://scenes/test_collision_object.tscn" id="5_din8e"]
@@ -9,9 +10,14 @@
 [node name="Gameplay" type="Node2D" unique_id=399864752]
 script = ExtResource("1_kwrm5")
 
+[node name="Concept" type="Sprite2D" parent="." unique_id=1577999356]
+position = Vector2(320, 180)
+scale = Vector2(0.33, 0.33)
+texture = ExtResource("2_din8e")
+
 [node name="Player" parent="." unique_id=2099615964 instance=ExtResource("2_r8bcl")]
 position = Vector2(322, 350)
-scale = Vector2(0.15, 0.15)
+scale = Vector2(0.12, 0.12)
 
 [node name="Balls" type="Node2D" parent="." unique_id=2084293887]
 
@@ -34,16 +40,17 @@ ignore_time_scale = true
 [node name="BouncyWalls" type="Node2D" parent="." unique_id=301278534]
 
 [node name="BouncyWall" parent="BouncyWalls" unique_id=13768673 instance=ExtResource("5_4bh5q")]
-position = Vector2(320, -10)
+position = Vector2(320, -4)
 scale = Vector2(32, 1)
 
 [node name="BouncyWall2" parent="BouncyWalls" unique_id=770585731 instance=ExtResource("5_4bh5q")]
-position = Vector2(-10, 180)
+position = Vector2(10, 180)
 scale = Vector2(1, 18)
 
 [node name="BouncyWall3" parent="BouncyWalls" unique_id=2118025762 instance=ExtResource("5_4bh5q")]
-position = Vector2(650, 180)
+position = Vector2(630, 180)
 scale = Vector2(1, 18)
 
+[connection signal="ball_killed" from="." to="Player" method="_on_gameplay_ball_killed"]
 [connection signal="killed_ball" from="KillFloor" to="." method="_on_kill_floor_killed_ball"]
 [connection signal="timeout" from="RestartGame" to="Player" method="_on_restart_game_timeout"]
