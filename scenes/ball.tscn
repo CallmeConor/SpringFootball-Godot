@@ -11,7 +11,8 @@ collision_layer = 8
 collision_mask = 126
 mass = 0.2
 continuous_cd = 2
-max_contacts_reported = 3
+contact_monitor = true
+max_contacts_reported = 10
 script = ExtResource("1_cxlvu")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1222754590]
@@ -20,4 +21,5 @@ texture = ExtResource("2_cxlvu")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1269723117]
 shape = SubResource("CircleShape2D_7s4qf")
 
+[connection signal="ball_entered_node" from="." to="." method="_on_ball_entered_node"]
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

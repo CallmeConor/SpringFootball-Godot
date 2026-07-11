@@ -3,7 +3,8 @@
 [ext_resource type="Script" uid="uid://dpcs8nb0nslgo" path="res://scenes/gameplay.gd" id="1_kwrm5"]
 [ext_resource type="PackedScene" uid="uid://ctl6wpx2tmljv" path="res://scenes/score_canvas.tscn" id="2_4bh5q"]
 [ext_resource type="Texture2D" uid="uid://b12s4tabxjqcn" path="res://concept.png" id="2_din8e"]
-[ext_resource type="PackedScene" uid="uid://b3ilxo80605v5" path="res://scenes/player.tscn" id="2_r8bcl"]
+[ext_resource type="PackedScene" uid="uid://beedfq3dnb88v" path="res://scenes/player.tscn" id="2_r8bcl"]
+[ext_resource type="Script" uid="uid://drd6fvuxtfxp8" path="res://scenes/score_canvas.gd" id="4_4bh5q"]
 [ext_resource type="PackedScene" uid="uid://crpxdsbsuu1d2" path="res://scenes/bouncy_wall.tscn" id="5_4bh5q"]
 [ext_resource type="PackedScene" uid="uid://csxinck2xa47t" path="res://scenes/kill_floor.tscn" id="5_ocj2s"]
 
@@ -11,12 +12,14 @@
 script = ExtResource("1_kwrm5")
 
 [node name="Concept" type="Sprite2D" parent="." unique_id=1577999356]
+visible = false
 position = Vector2(960, 540)
 texture = ExtResource("2_din8e")
 
 [node name="Score_Canvas" parent="." unique_id=1967747765 instance=ExtResource("2_4bh5q")]
 offset_right = 1920.0
 offset_bottom = 1080.0
+script = ExtResource("4_4bh5q")
 
 [node name="Player" parent="." unique_id=2099615964 instance=ExtResource("2_r8bcl")]
 position = Vector2(1430, 1048)
@@ -38,19 +41,23 @@ ignore_time_scale = true
 [node name="BouncyWalls" type="Node2D" parent="." unique_id=301278534]
 
 [node name="BouncyWall" parent="BouncyWalls" unique_id=13768673 instance=ExtResource("5_4bh5q")]
+unique_name_in_owner = true
 position = Vector2(960, 8)
 scale = Vector2(96, 0.8)
 
 [node name="BouncyWall2" parent="BouncyWalls" unique_id=770585731 instance=ExtResource("5_4bh5q")]
-position = Vector2(24, 540)
+unique_name_in_owner = true
+position = Vector2(24, 216)
 scale = Vector2(2.4, 54)
 
 [node name="BouncyWall3" parent="BouncyWalls" unique_id=2118025762 instance=ExtResource("5_4bh5q")]
-position = Vector2(1896, 540)
+unique_name_in_owner = true
+position = Vector2(1896, 216)
 scale = Vector2(2.4, 54)
 
 [connection signal="ball_killed" from="." to="Player" method="_on_ball_killed"]
 [connection signal="ball_spawned" from="." to="Player" method="_on_ball_spawned"]
+[connection signal="headed_the_ball" from="Player" to="." method="_on_player_headed_the_ball"]
 [connection signal="ready_to_serve" from="Player" to="." method="_on_player_ready_to_serve"]
 [connection signal="killed_ball" from="KillFloor" to="." method="_on_kill_floor_killed_ball"]
 [connection signal="timeout" from="RestartGame" to="Player" method="_on_restart_game_timeout"]

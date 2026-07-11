@@ -1,5 +1,7 @@
 extends CharacterBody2D
 
+class_name Player
+
 enum Lean_Direction 
 {
 	LEFT = -1,
@@ -36,6 +38,7 @@ var charge_held_time: float = 0.0
 var has_served: bool = false
 
 signal ready_to_serve
+signal headed_the_ball(player : Player)
 
 func _ready():
 	var children = _get_all_children($BodyBase)
@@ -117,8 +120,8 @@ func _simulate_spring_motion(delta: float):
 func _head_the_ball(ball_body: Ball) -> void:
 	var direction : Vector2 = ball_body.global_position - head.global_position
 	var header_force = direction.normalized() * abs(spring.cVelocity) * ball_fling_multiplier
-	print("Header Force: ", header_force.length())
 	ball_body.apply_impulse(header_force)
+	headed_the_ball.emit($".")
 
 func _charge_held_time_normalised() -> float:
 	return charge_held_time / max_charge_hold_time
