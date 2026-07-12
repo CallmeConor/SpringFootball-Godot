@@ -11,7 +11,7 @@ signal ball_spawned(Ball)
 var player_last_touched_ball: Player
 var player_served_correctly: bool
 
-@onready var bouncy_walls: Array = [%BouncyWall, %BouncyWall, %BouncyWall]
+@onready var bouncy_walls: Array = [%BouncyWall, %BouncyWall2, %BouncyWall3]
 
 @onready var score_canvas: Control = $Score_Canvas
 
@@ -73,9 +73,13 @@ func _on_player_headed_the_ball(player: Player):
 	player_last_touched_ball = player
 
 func _on_ball_entered(node : Node):
-	if node.owner is Player:
+	if node is Player or node.owner is Player:
 		print("Ball hit a player")
+		return
 	
-	if bouncy_walls.has(node):
+	if bouncy_walls.has(node) or bouncy_walls.has(node.owner):
 		print("Ball hit a wall")
 		player_served_correctly = player_last_touched_ball != null
+		return
+	
+	print("Ball hit something else: ", node.name, " owned by: ", node.owner.name)

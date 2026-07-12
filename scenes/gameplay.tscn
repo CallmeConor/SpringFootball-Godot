@@ -7,6 +7,7 @@
 [ext_resource type="Script" uid="uid://drd6fvuxtfxp8" path="res://scenes/score_canvas.gd" id="4_4bh5q"]
 [ext_resource type="PackedScene" uid="uid://crpxdsbsuu1d2" path="res://scenes/bouncy_wall.tscn" id="5_4bh5q"]
 [ext_resource type="PackedScene" uid="uid://csxinck2xa47t" path="res://scenes/kill_floor.tscn" id="5_ocj2s"]
+[ext_resource type="PackedScene" uid="uid://b4rt6mfy21o23" path="res://scenes/solid_wall.tscn" id="8_e124b"]
 
 [node name="Gameplay" type="Node2D" unique_id=399864752]
 script = ExtResource("1_kwrm5")
@@ -47,12 +48,22 @@ scale = Vector2(96, 0.8)
 
 [node name="BouncyWall2" parent="BouncyWalls" unique_id=770585731 instance=ExtResource("5_4bh5q")]
 unique_name_in_owner = true
-position = Vector2(24, 216)
+position = Vector2(24, 120)
 scale = Vector2(2.4, 54)
 
 [node name="BouncyWall3" parent="BouncyWalls" unique_id=2118025762 instance=ExtResource("5_4bh5q")]
 unique_name_in_owner = true
-position = Vector2(1896, 216)
+position = Vector2(1896, 120)
+scale = Vector2(2.4, 54)
+
+[node name="SolidWalls" type="Node2D" parent="." unique_id=474275202]
+
+[node name="SolidWall" parent="SolidWalls" unique_id=497686968 instance=ExtResource("8_e124b")]
+position = Vector2(24, 1200)
+scale = Vector2(2.4, 54)
+
+[node name="SolidWall2" parent="SolidWalls" unique_id=1513692869 instance=ExtResource("8_e124b")]
+position = Vector2(1896, 1200)
 scale = Vector2(2.4, 54)
 
 [connection signal="ball_killed" from="." to="Player" method="_on_ball_killed"]
