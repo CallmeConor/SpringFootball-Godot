@@ -5,6 +5,7 @@ friction = 0.0
 bounce = 0.6
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wy63i"]
+size = Vector2(64, 64)
 
 [sub_resource type="Gradient" id="Gradient_4mhyq"]
 offsets = PackedFloat32Array(0, 0.3, 0.7, 1)
@@ -24,5 +25,4 @@ shape = SubResource("RectangleShape2D_wy63i")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=2086643646]
 position = Vector2(9.536743e-07, -9.536743e-07)
-scale = Vector2(0.31249997, 0.31249997)
 texture = SubResource("GradientTexture2D_i8n3p")

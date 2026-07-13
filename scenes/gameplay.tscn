@@ -9,6 +9,51 @@
 [ext_resource type="PackedScene" uid="uid://csxinck2xa47t" path="res://scenes/kill_floor.tscn" id="5_ocj2s"]
 [ext_resource type="PackedScene" uid="uid://b4rt6mfy21o23" path="res://scenes/solid_wall.tscn" id="8_e124b"]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_101mb"]
+size = Vector2(1920, 150)
+
+[sub_resource type="Gradient" id="Gradient_4mhyq"]
+offsets = PackedFloat32Array(0, 0.3, 0.7, 1)
+colors = PackedColorArray(0.8509804, 0.28627452, 0.64705884, 1, 0.2321679, 0.7382564, 0.7010524, 1, 0.2321679, 0.7382564, 0.7010524, 1, 0.8509804, 0.28627452, 0.64705884, 1)
+metadata/_snap_enabled = true
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_e124b"]
+gradient = SubResource("Gradient_4mhyq")
+width = 1920
+height = 16
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hbo4f"]
+size = Vector2(150, 653)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_101mb"]
+gradient = SubResource("Gradient_4mhyq")
+width = 48
+height = 652
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_e124b"]
+size = Vector2(150, 652)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ctvyo"]
+size = Vector2(150, 428)
+
+[sub_resource type="Gradient" id="Gradient_e124b"]
+offsets = PackedFloat32Array(0, 0.3, 0.7, 1)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 1, 1)
+metadata/_snap_enabled = true
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_hbo4f"]
+gradient = SubResource("Gradient_e124b")
+width = 48
+height = 428
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qixtg"]
+size = Vector2(150, 428)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_ctvyo"]
+gradient = SubResource("Gradient_e124b")
+width = 48
+height = 428
+
 [node name="Gameplay" type="Node2D" unique_id=399864752]
 script = ExtResource("1_kwrm5")
 
@@ -43,28 +88,63 @@ ignore_time_scale = true
 
 [node name="BouncyWall" parent="BouncyWalls" unique_id=13768673 instance=ExtResource("5_4bh5q")]
 unique_name_in_owner = true
-position = Vector2(960, 8)
-scale = Vector2(96, 0.8)
+position = Vector2(960, 0)
+
+[node name="CollisionShape2D" parent="BouncyWalls/BouncyWall" index="0" unique_id=114379382]
+position = Vector2(0, -51)
+shape = SubResource("RectangleShape2D_101mb")
+
+[node name="Sprite2D" parent="BouncyWalls/BouncyWall" index="1" unique_id=2086643646]
+position = Vector2(0, 0)
+scale = Vector2(1, 3.205)
+texture = SubResource("GradientTexture2D_e124b")
 
 [node name="BouncyWall2" parent="BouncyWalls" unique_id=770585731 instance=ExtResource("5_4bh5q")]
 unique_name_in_owner = true
-position = Vector2(24, 120)
-scale = Vector2(2.4, 54)
+position = Vector2(24, 326)
+
+[node name="CollisionShape2D" parent="BouncyWalls/BouncyWall2" index="0" unique_id=114379382]
+position = Vector2(-51, 0)
+shape = SubResource("RectangleShape2D_hbo4f")
+
+[node name="Sprite2D" parent="BouncyWalls/BouncyWall2" index="1" unique_id=2086643646]
+position = Vector2(0, 0)
+texture = SubResource("GradientTexture2D_101mb")
 
 [node name="BouncyWall3" parent="BouncyWalls" unique_id=2118025762 instance=ExtResource("5_4bh5q")]
 unique_name_in_owner = true
-position = Vector2(1896, 120)
-scale = Vector2(2.4, 54)
+position = Vector2(1896, 326)
+
+[node name="CollisionShape2D" parent="BouncyWalls/BouncyWall3" index="0" unique_id=114379382]
+position = Vector2(51, 0)
+shape = SubResource("RectangleShape2D_e124b")
+
+[node name="Sprite2D" parent="BouncyWalls/BouncyWall3" index="1" unique_id=2086643646]
+position = Vector2(0, 0)
+texture = SubResource("GradientTexture2D_101mb")
 
 [node name="SolidWalls" type="Node2D" parent="." unique_id=474275202]
 
 [node name="SolidWall" parent="SolidWalls" unique_id=497686968 instance=ExtResource("8_e124b")]
-position = Vector2(24, 1200)
-scale = Vector2(2.4, 54)
+position = Vector2(24, 866)
+
+[node name="CollisionShape2D" parent="SolidWalls/SolidWall" index="0" unique_id=114379382]
+position = Vector2(-51, 0)
+shape = SubResource("RectangleShape2D_ctvyo")
+
+[node name="Sprite2D" parent="SolidWalls/SolidWall" index="1" unique_id=2086643646]
+position = Vector2(0, 0)
+texture = SubResource("GradientTexture2D_hbo4f")
 
 [node name="SolidWall2" parent="SolidWalls" unique_id=1513692869 instance=ExtResource("8_e124b")]
-position = Vector2(1896, 1200)
-scale = Vector2(2.4, 54)
+position = Vector2(1896, 866)
+
+[node name="CollisionShape2D" parent="SolidWalls/SolidWall2" index="0" unique_id=114379382]
+position = Vector2(51, 0)
+shape = SubResource("RectangleShape2D_qixtg")
+
+[node name="Sprite2D" parent="SolidWalls/SolidWall2" index="1" unique_id=2086643646]
+texture = SubResource("GradientTexture2D_ctvyo")
 
 [connection signal="ball_killed" from="." to="Player" method="_on_ball_killed"]
 [connection signal="ball_spawned" from="." to="Player" method="_on_ball_spawned"]
@@ -72,3 +152,9 @@ scale = Vector2(2.4, 54)
 [connection signal="ready_to_serve" from="Player" to="." method="_on_player_ready_to_serve"]
 [connection signal="killed_ball" from="KillFloor" to="." method="_on_kill_floor_killed_ball"]
 [connection signal="timeout" from="RestartGame" to="Player" method="_on_restart_game_timeout"]
+
+[editable path="BouncyWalls/BouncyWall"]
+[editable path="BouncyWalls/BouncyWall2"]
+[editable path="BouncyWalls/BouncyWall3"]
+[editable path="SolidWalls/SolidWall"]
+[editable path="SolidWalls/SolidWall2"]

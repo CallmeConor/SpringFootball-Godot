@@ -24,5 +24,4 @@ shape = SubResource("RectangleShape2D_wy63i")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=2086643646]
 position = Vector2(9.536743e-07, -9.536743e-07)
-scale = Vector2(0.31249997, 0.31249997)
 texture = SubResource("GradientTexture2D_i8n3p")
