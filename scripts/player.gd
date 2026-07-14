@@ -40,7 +40,11 @@ var has_served: bool = false
 signal ready_to_serve
 signal headed_the_ball(player : Player)
 
+func _enter_tree() -> void:
+	set_multiplayer_authority(name.to_int())
+
 func _ready():
+	spring = SpringData.new()
 	var children = _get_all_children($BodyBase)
 	head = children[children.size() - 1]
 
@@ -61,20 +65,22 @@ func _input(event: InputEvent):
 		velocity = Vector2.RIGHT * xDir * move_speed  
 		if event.double_tap:
 			spring.AddVelocity(poke_force)
-	
+
 	if event is InputEventKey:
 		velocity = Vector2.RIGHT * Input.get_axis("move_left", "move_right") * move_speed
-	
+
 	elif event is InputEventMouseButton and event.is_pressed():
 		if event.button_index == MOUSE_BUTTON_LEFT: 
 			velocity = Vector2.LEFT * move_speed
 		elif event.button_index == MOUSE_BUTTON_RIGHT:
 			velocity = Vector2.RIGHT * move_speed
-	
+
 	else:
 		velocity = Vector2.ZERO
 
 func _process_charge_time(delta:float):
+	if !is_multiplayer_authority(): return
+
 	if Input.is_action_just_pressed("move_up"):
 		charge_held_time = _calculate_charge_held_start_time()
 		_calculate_charge_held_lean(0.0, Lean_Direction.RIGHT)
@@ -83,7 +89,7 @@ func _process_charge_time(delta:float):
 		_signal_ready_to_serve()
 	elif Input.is_action_just_released("move_up"):
 		_apply_fling_force_on_charge_released(Lean_Direction.RIGHT)
-	
+
 	if Input.is_action_just_pressed("move_down"):
 		charge_held_time = _calculate_charge_held_start_time()
 		_calculate_charge_held_lean(0.0, Lean_Direction.LEFT)

@@ -1,13 +1,15 @@
 [gd_scene format=3 uid="uid://dtl64s0d4rrsd"]
 
-[ext_resource type="Script" uid="uid://dpcs8nb0nslgo" path="res://scenes/gameplay.gd" id="1_kwrm5"]
+[ext_resource type="Script" uid="uid://dpcs8nb0nslgo" path="res://scripts/gameplay.gd" id="1_kwrm5"]
 [ext_resource type="PackedScene" uid="uid://ctl6wpx2tmljv" path="res://scenes/score_canvas.tscn" id="2_4bh5q"]
 [ext_resource type="Texture2D" uid="uid://b12s4tabxjqcn" path="res://concept.png" id="2_din8e"]
 [ext_resource type="PackedScene" uid="uid://beedfq3dnb88v" path="res://scenes/player.tscn" id="2_r8bcl"]
-[ext_resource type="Script" uid="uid://drd6fvuxtfxp8" path="res://scenes/score_canvas.gd" id="4_4bh5q"]
+[ext_resource type="Script" uid="uid://drd6fvuxtfxp8" path="res://scripts/score_canvas.gd" id="4_4bh5q"]
 [ext_resource type="PackedScene" uid="uid://crpxdsbsuu1d2" path="res://scenes/bouncy_wall.tscn" id="5_4bh5q"]
+[ext_resource type="PackedScene" uid="uid://btoawbhmgi4wr" path="res://scenes/HighLevelUI.tscn" id="5_101mb"]
 [ext_resource type="PackedScene" uid="uid://csxinck2xa47t" path="res://scenes/kill_floor.tscn" id="5_ocj2s"]
 [ext_resource type="PackedScene" uid="uid://b4rt6mfy21o23" path="res://scenes/solid_wall.tscn" id="8_e124b"]
+[ext_resource type="Script" uid="uid://flp741qywgae" path="res://scripts/networking/multiplayer_spawner.gd" id="10_hbo4f"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_101mb"]
 size = Vector2(1920, 150)
@@ -67,8 +69,7 @@ offset_right = 1920.0
 offset_bottom = 1080.0
 script = ExtResource("4_4bh5q")
 
-[node name="Player" parent="." unique_id=2099615964 instance=ExtResource("2_r8bcl")]
-position = Vector2(1430, 1048)
+[node name="HighLevelUi" parent="." unique_id=1965659471 instance=ExtResource("5_101mb")]
 
 [node name="Balls" type="Node2D" parent="." unique_id=2084293887]
 
@@ -146,12 +147,27 @@ shape = SubResource("RectangleShape2D_qixtg")
 [node name="Sprite2D" parent="SolidWalls/SolidWall2" index="1" unique_id=2086643646]
 texture = SubResource("GradientTexture2D_ctvyo")
 
-[connection signal="ball_killed" from="." to="Player" method="_on_ball_killed"]
-[connection signal="ball_spawned" from="." to="Player" method="_on_ball_spawned"]
-[connection signal="headed_the_ball" from="Player" to="." method="_on_player_headed_the_ball"]
-[connection signal="ready_to_serve" from="Player" to="." method="_on_player_ready_to_serve"]
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="." unique_id=2061398726 node_paths=PackedStringArray("player_spawns")]
+_spawnable_scenes = PackedStringArray("uid://beedfq3dnb88v")
+spawn_path = NodePath("..")
+spawn_limit = 2
+script = ExtResource("10_hbo4f")
+network_player = ExtResource("2_r8bcl")
+player_spawns = [NodePath("../Player1Spawn"), NodePath("../Player2Spawn")]
+
+[node name="Player1Spawn" type="Node2D" parent="." unique_id=609216153]
+unique_name_in_owner = true
+position = Vector2(640, 1048)
+
+[node name="Player2Spawn" type="Node2D" parent="." unique_id=237638260]
+unique_name_in_owner = true
+position = Vector2(1280, 1048)
+
 [connection signal="killed_ball" from="KillFloor" to="." method="_on_kill_floor_killed_ball"]
-[connection signal="timeout" from="RestartGame" to="Player" method="_on_restart_game_timeout"]
+[connection signal="child_entered_tree" from="MultiplayerSpawner" to="MultiplayerSpawner" method="_on_child_entered_tree"]
+[connection signal="child_exiting_tree" from="MultiplayerSpawner" to="MultiplayerSpawner" method="_on_child_exiting_tree"]
+[connection signal="despawned" from="MultiplayerSpawner" to="MultiplayerSpawner" method="_on_despawned"]
+[connection signal="spawned" from="MultiplayerSpawner" to="MultiplayerSpawner" method="_on_spawned"]
 
 [editable path="BouncyWalls/BouncyWall"]
 [editable path="BouncyWalls/BouncyWall2"]

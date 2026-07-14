@@ -1,19 +1,23 @@
 [gd_scene format=3 uid="uid://beedfq3dnb88v"]
 
-[ext_resource type="Script" uid="uid://bbk1w1m4qil8f" path="res://scenes/player.gd" id="1_kyqiw"]
-[ext_resource type="Script" uid="uid://bk8sty7ivyytm" path="res://springs/spring_data.gd" id="2_gntrk"]
+[ext_resource type="Script" uid="uid://bbk1w1m4qil8f" path="res://scripts/player.gd" id="1_kyqiw"]
+[ext_resource type="Script" uid="uid://bk8sty7ivyytm" path="res://scripts/springs/spring_data.gd" id="2_gntrk"]
 [ext_resource type="Texture2D" uid="uid://c0qwutybtfeg3" path="res://body_red.png" id="3_dqkch"]
 [ext_resource type="Texture2D" uid="uid://bv3223uhuprch" path="res://head_red.png" id="4_qlg0r"]
 
 [sub_resource type="Resource" id="Resource_dewec"]
 script = ExtResource("2_gntrk")
-metadata/_custom_type_script = "uid://bk8sty7ivyytm"
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_6t5aa"]
 radius = 72.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gntrk"]
 size = Vector2(128, 128)
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_dqkch"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
 
 [node name="Player" type="CharacterBody2D" unique_id=1816067859]
 collision_mask = 17
@@ -64,6 +68,9 @@ shape = SubResource("RectangleShape2D_gntrk")
 [node name="BulletHeaderTimer" type="Timer" parent="." unique_id=2019112681]
 one_shot = true
 ignore_time_scale = true
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=491576305]
+replication_config = SubResource("SceneReplicationConfig_dqkch")
 
 [connection signal="body_entered" from="BodyBase/BodyNode_1/BodyNode_2/BodyNode_3/BodyHead/Rigidbody2D" to="." method="_on_rigidbody_head_entered"]
 [connection signal="timeout" from="BulletHeaderTimer" to="." method="_on_bullet_header_timeout"]
